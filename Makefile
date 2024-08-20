@@ -3,7 +3,6 @@
 IMAGE_NAME    = FanController.hex
 BUILD_DIR    ?= $(shell pwd)/build
 PACKAGES_DIR ?= ${BUILD_DIR}/packages
-GREEN		  = \033[1;32m
 
 .PHONY: build cmake all test
 
@@ -14,7 +13,7 @@ cmake:
 
 build: cmake
 	${MAKE} -C ${BUILD_DIR}
-	@echo "${GREEN}Built successfully!"
+	@echo "Built successfully!"
 
 clean:
 	rm -rf ${BUILD_DIR}

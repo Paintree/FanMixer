@@ -397,5 +397,21 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 
+#STM32Cube
+stm32_workspace/.settings
+stm32_workspace/Core
+stm32_workspace/Drivers
+stm32_workspace/Debug
+stm32_workspace/EWARM
+stm32_workspace/Middlewares
+stm32_workspace/.cproject
+stm32_workspace/.project
+stm32_workspace/.mxproject
+stm32_workspace/*.ld
+
 .vscode
 build
+
+# Generated files
+src/system
+include/system
