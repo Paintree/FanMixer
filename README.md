@@ -17,5 +17,12 @@ $ make test
 Flash board:
 $ make flash
 
-Install required dependencies (Ubuntu 22.04)
-$ make deps
+Required dependencies:
+arm-none-eabi-gcc
+arm-none-eabi-g++
+arm-none-eabi-objcopy"
+arm-none-eabi-objdump"
+make
+cmake
+openocd
+gdb
