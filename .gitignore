@@ -382,6 +382,7 @@ FodyWeavers.xsd
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+!.vscode/*.svd
 *.code-workspace
 
 # Local History for Visual Studio Code
@@ -398,16 +399,7 @@ FodyWeavers.xsd
 *.sln.iml
 
 #STM32Cube
-stm32_workspace/.settings
-stm32_workspace/Core
-stm32_workspace/Drivers
-stm32_workspace/Debug
-stm32_workspace/Release
-stm32_workspace/EWARM
-stm32_workspace/Middlewares
-stm32_workspace/.cproject
-stm32_workspace/.project
-stm32_workspace/.mxproject
-stm32_workspace/*.ld
+stm32_workspace/*
+!stm32_workspace/*.ioc
 
 build
