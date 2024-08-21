@@ -1,6 +1,6 @@
 # This makefile is created for just simplify building and cleaning by CMake
 
-IMAGE_NAME    = FanController.hex
+IMAGE_NAME    = FanControllerBoard.hex
 BUILD_DIR    ?= $(shell pwd)/build
 PACKAGES_DIR ?= ${BUILD_DIR}/packages
 

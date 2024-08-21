@@ -1,23 +1,73 @@
 #include <stm32f1xx_hal.h>
+#include <FreeRTOS.h>
+#include <task.h>
+
+#include <gpio.h>
 
 
 static void systemClockInit();
 
+void status_task() {
+    __HAL_RCC_CLEAR_RESET_FLAGS();
+
+    IWDG_HandleTypeDef hIWDG = {
+        .Instance           = IWDG,
+        .Init.Prescaler     = IWDG_PRESCALER_64,
+        .Init.Reload        = 2000,
+    };
+    HAL_IWDG_Init(&hIWDG);
+
+    const gpio_t statusLed = {
+        .port = GPIO_STATUS_LED_PORT,
+        .pin  = GPIO_STATUS_LED_PIN,
+    };
+
+    while(1) {
+        HAL_IWDG_Refresh(&hIWDG);
+        gpioToggle(statusLed);
+
+        vTaskDelay(200 / portTICK_PERIOD_MS);
+    }
+}
+
 int main() {
     HAL_Init();
     systemClockInit();
-    
+    gpioInit();
+
+    xTaskCreate(status_task, "status_task", 64, NULL, 0, NULL);
+
+
+    vTaskStartScheduler();
+
     while(1) {
     }
 }
 
-void systemClockInit()
-{
+void systemClockInit() {
+  RCC_OscInitTypeDef RCC_OscInitStruct = {0};
+  RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
+
+  /** Initializes the RCC Oscillators according to the specified parameters
+  * in the RCC_OscInitTypeDef structure.
+  */
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
+  RCC_OscInitStruct.HSEState = RCC_HSE_ON;
+  RCC_OscInitStruct.HSEPredivValue = RCC_HSE_PREDIV_DIV1;
+  RCC_OscInitStruct.HSIState = RCC_HSI_ON;
+  RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
+  RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
+  RCC_OscInitStruct.PLL.PLLMUL = RCC_PLL_MUL9;
+  HAL_RCC_OscConfig(&RCC_OscInitStruct);
+
+  /** Initializes the CPU, AHB and APB buses clocks
+  */
+  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
+                              |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
+  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
+  RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
+  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV2;
+  RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
+  HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_2);
 
 }
-
-// Uncomment when using arm-gcc-none-eabi above 10.3
-void _close_r(void) {}
-void _lseek_r(void) {}
-void _read_r(void) {}
-void _write_r(void) {}
