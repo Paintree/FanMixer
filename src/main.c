@@ -3,6 +3,7 @@
 #include <task.h>
 
 #include <gpio.h>
+#include <timer.h>
 
 
 static void systemClockInit();
@@ -34,6 +35,7 @@ int main() {
     HAL_Init();
     systemClockInit();
     gpioInit();
+    timerInit();
 
     xTaskCreate(status_task, "status_task", 64, NULL, 0, NULL);
 
