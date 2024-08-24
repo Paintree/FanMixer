@@ -35,8 +35,6 @@ void gpioTimersICInit() {
     GPIO_InitStruct.Mode    = FAN_INPUT_3_MODE;
     GPIO_InitStruct.Speed   = FAN_INPUT_3_SPEED;
     HAL_GPIO_Init(FAN_INPUT_3_PORT, &GPIO_InitStruct);
-
-    __HAL_AFIO_REMAP_TIM2_PARTIAL_2();
 }
 
 void gpioTimersPWMInit() {
@@ -49,8 +47,6 @@ void gpioTimersPWMInit() {
     GPIO_InitStruct.Mode    = FAN_OUTPUT_1_MODE;
     GPIO_InitStruct.Speed   = FAN_OUTPUT_1_SPEED;
     HAL_GPIO_Init(FAN_OUTPUT_1_PORT, &GPIO_InitStruct);
-
-    __HAL_AFIO_REMAP_TIM2_PARTIAL_2();
 }
 
 void gpioInit() {
