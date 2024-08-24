@@ -4,6 +4,7 @@
 
 #include <gpio.h>
 #include <timer.h>
+#include <fan.h>
 
 
 static void systemClockInit();
@@ -22,12 +23,22 @@ void status_task() {
         .port = GPIO_STATUS_LED_PORT,
         .pin  = GPIO_STATUS_LED_PIN,
     };
-
+    
     while(1) {
         HAL_IWDG_Refresh(&hIWDG);
         gpioToggle(statusLed);
 
-        vTaskDelay(200 / portTICK_PERIOD_MS);
+        vTaskDelay(100 / portTICK_PERIOD_MS);
+    }
+}
+
+void fan_task() {
+    fanInit();
+    vTaskDelay(100 / portTICK_PERIOD_MS);
+
+    while(1) {
+        fanStep();
+        vTaskDelay(10 / portTICK_PERIOD_MS);
     }
 }
 
@@ -38,7 +49,7 @@ int main() {
     timerInit();
 
     xTaskCreate(status_task, "status_task", 64, NULL, 0, NULL);
-
+    xTaskCreate(fan_task, "fan_task", 128, NULL, 1, NULL);
 
     vTaskStartScheduler();
 
@@ -71,5 +82,16 @@ void systemClockInit() {
   RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV2;
   RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
   HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_2);
+
+}
+
+void HAL_MspInit(void) {
+
+  __HAL_RCC_AFIO_CLK_ENABLE();
+  __HAL_RCC_PWR_CLK_ENABLE();
+
+  HAL_NVIC_SetPriority(PendSV_IRQn, 15, 0);
+
+  __HAL_AFIO_REMAP_SWJ_NOJTAG();
 
 }

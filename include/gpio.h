@@ -18,32 +18,23 @@
 #define FAN_INPUT_1_CLK_ENABLE          __HAL_RCC_GPIOA_CLK_ENABLE
 
 #define FAN_INPUT_2_PORT                GPIOA
-#define FAN_INPUT_2_PIN                 GPIO_PIN_1
+#define FAN_INPUT_2_PIN                 GPIO_PIN_6
 #define FAN_INPUT_2_MODE                GPIO_MODE_INPUT
 #define FAN_INPUT_2_PULL                GPIO_NOPULL
 #define FAN_INPUT_2_SPEED               GPIO_SPEED_FREQ_LOW
 #define FAN_INPUT_2_CLK_ENABLE          __HAL_RCC_GPIOA_CLK_ENABLE
 
-#define FAN_INPUT_3_PORT                GPIOB
-#define FAN_INPUT_3_PIN                 GPIO_PIN_10
-#define FAN_INPUT_3_MODE                GPIO_MODE_INPUT
-#define FAN_INPUT_3_PULL                GPIO_NOPULL
-#define FAN_INPUT_3_SPEED               GPIO_SPEED_FREQ_LOW
-#define FAN_INPUT_3_CLK_ENABLE          __HAL_RCC_GPIOB_CLK_ENABLE
-
-#define FAN_OUTPUT_1_PORT               GPIOB
-#define FAN_OUTPUT_1_PIN                GPIO_PIN_11
+#define FAN_OUTPUT_1_PORT               GPIOA
+#define FAN_OUTPUT_1_PIN                GPIO_PIN_8
 #define FAN_OUTPUT_1_MODE               GPIO_MODE_AF_PP
 #define FAN_OUTPUT_1_PULL               GPIO_NOPULL
 #define FAN_OUTPUT_1_SPEED              GPIO_SPEED_FREQ_LOW
-#define FAN_OUTPUT_1_CLK_ENABLE         __HAL_RCC_GPIOB_CLK_ENABLE
+#define FAN_OUTPUT_1_CLK_ENABLE         __HAL_RCC_GPIOA_CLK_ENABLE
 
 typedef struct {
     GPIO_TypeDef *port;
     uint32_t pin;
 } gpio_t;
-
-
 
 
 void gpioInit();

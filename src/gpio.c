@@ -16,7 +16,6 @@ void gpioTimersICInit() {
 
     FAN_INPUT_1_CLK_ENABLE();
     FAN_INPUT_2_CLK_ENABLE();
-    FAN_INPUT_3_CLK_ENABLE();
 
     GPIO_InitStruct.Pin     = FAN_INPUT_1_PIN;
     GPIO_InitStruct.Pull    = FAN_INPUT_1_PULL;
@@ -29,12 +28,6 @@ void gpioTimersICInit() {
     GPIO_InitStruct.Mode    = FAN_INPUT_2_MODE;
     GPIO_InitStruct.Speed   = FAN_INPUT_2_SPEED;
     HAL_GPIO_Init(FAN_INPUT_2_PORT, &GPIO_InitStruct);
-
-    GPIO_InitStruct.Pin     = FAN_INPUT_3_PIN;
-    GPIO_InitStruct.Pull    = FAN_INPUT_3_PULL;
-    GPIO_InitStruct.Mode    = FAN_INPUT_3_MODE;
-    GPIO_InitStruct.Speed   = FAN_INPUT_3_SPEED;
-    HAL_GPIO_Init(FAN_INPUT_3_PORT, &GPIO_InitStruct);
 }
 
 void gpioTimersPWMInit() {

@@ -4,12 +4,14 @@
 #include <stdint.h>
 
 typedef enum {
-    PWM_OUTPUT_0,
-    PWM_OUTPUT_1,
-} TimerPWMOutput;
+    PWM_INPUT_1,
+    PWM_INPUT_2,
+} TimerPWMInput;
 
 void timerInit();
-void setPWM(TimerPWMOutput timerOutput, uint8_t pwm);
+void timerSetPWM(uint8_t dutyCycle);
+uint8_t timerGetPWMReading(TimerPWMInput pwmInput);
+
 
 
 
