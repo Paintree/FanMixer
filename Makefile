@@ -1,5 +1,5 @@
-IMAGE_NAME    		= FanControllerBoard.hex
-TESTS_NAME			= FanControllerTests
+IMAGE_NAME    		= FanMixer.hex
+TESTS_NAME			= FanMixerTests
 BUILD_DIR     		= $(shell pwd)/build
 TESTS_BUILD_DIR     = $(shell pwd)/build/tests
 TESTS_DIR     		= $(shell pwd)/tests

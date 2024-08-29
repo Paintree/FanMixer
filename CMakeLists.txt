@@ -1,6 +1,6 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 3.10)
 
-SET(TARGET "FanControllerBoard")
+SET(TARGET "FanMixer")
 SET(PROJECT_NAME "${TARGET} firmware")
 SET(PROJECT_DESCRIPTION "Fan Controller firmware")
 

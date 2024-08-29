@@ -1,7 +1,14 @@
-# fan_controller_board
-Cheap PWM fan controller based on Blue Pill
+# fan_mixer
+Cheap PWM fan mixer based on Blue Pill
 
 Supported MCUs: STM32F103C6T6
+
+The idea is to read two PWM singals from source like motherboard, and set one PWM output
+according to the inputs. Default logic sums the signals, but it can be easily adjusted in
+fan.c file.
+
+To flash the board, connect blue pill to stlink, plug blue pill to power, and stlink to PC.
+Build project with "make build" and flash the board with "make flash" command.
 
 commands:
 
