@@ -14,7 +14,7 @@
     CYCLE.
 ****************************************************************/
 
-// Default 10S0. Higher means bigger impact.
+// Default 100. Higher means bigger impact.
 #define INPUT_FAN1_WEIGHT 100
 #define INPUT_FAN2_WEIGHT 100
 
