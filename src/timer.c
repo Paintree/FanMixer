@@ -12,7 +12,9 @@
 #define TIM_PWM_READ_PERIOD 0xFFFF // Set timer to MAX Frequency
 
 
-static uint8_t dutyCycle[TIM_COUNT - 1]; // Only two timers are calculating duty cycle
+static uint8_t dutyCycle[TIM_COUNT - 1] = {100, 100}; // Only two timers are calculating duty cycle
+static TimerStatus timerStatus[TIM_COUNT - 1];
+static uint8_t timerInt[TIM_COUNT - 1];
 
 
 static TIM_HandleTypeDef htim[TIM_COUNT] = {
@@ -130,7 +132,22 @@ uint8_t calculateDutyCycle(TIM_HandleTypeDef *htim) {
     else return duty + 1;
 }
 
+TimerStatus getPWMTimerStatus(TimerPWMInput id) {
+    return timerStatus[id];
+}
 
+void timerStep() {
+    for(int i = 0; i < TIM_COUNT-1; i++) {
+        if (timerStatus[i] == TIMER_NOT_STARTED) {
+            timerInt[i] = 0;
+        } else if (timerInt[i] == 0) {
+            timerStatus[i] = TIMER_NO_UPDATES;
+        } else {
+            timerStatus[i] = TIMER_RUNNING;
+            timerInt[i] = 0;
+        }
+    }
+}
 
 void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim)
 {
@@ -153,14 +170,20 @@ void TIM1_IRQHandler(void) {
 }
 
 void TIM2_IRQHandler(void) {
+    if(timerStatus[PWM_INPUT_1] == TIMER_NOT_STARTED || timerStatus[PWM_INPUT_1] == TIMER_NO_UPDATES)
+        timerStatus[PWM_INPUT_1] = TIMER_RUNNING;
 
-  HAL_TIM_IRQHandler(&htim[1]);
+    HAL_TIM_IRQHandler(&htim[1]);
+    timerInt[PWM_INPUT_1] = 1; // Bool to check if update happened
 
 }
 
 void TIM3_IRQHandler(void) {
+    if(timerStatus[PWM_INPUT_2] == TIMER_NOT_STARTED || timerStatus[PWM_INPUT_2] == TIMER_NO_UPDATES)
+        timerStatus[PWM_INPUT_2] = TIMER_RUNNING;
 
   HAL_TIM_IRQHandler(&htim[2]);
+  timerInt[PWM_INPUT_2] = 1; // Bool to check if update happened
 
 }
 
