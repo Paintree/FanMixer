@@ -13,3 +13,7 @@ uint8_t timerGetPWMReading(TimerPWMInput pwmInput) {
 
 uint8_t calculateDutyCycle(TIM_HandleTypeDef *htim) {
 }
+
+TimerStatus getPWMTimerStatus(TimerPWMInput pwmInput) {
+    
+}
