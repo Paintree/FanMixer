@@ -48,7 +48,7 @@ ADD_COMPILE_OPTIONS(-fdata-sections)
 ADD_COMPILE_OPTIONS(-ffunction-sections)
 ADD_COMPILE_OPTIONS(-Wdouble-promotion)
 ADD_COMPILE_OPTIONS(-fsingle-precision-constant)
-ADD_COMPILE_OPTIONS(-Og)
+ADD_COMPILE_OPTIONS(-O2)
 ADD_COMPILE_OPTIONS(-nostdlib)
 ADD_COMPILE_OPTIONS(-fno-exceptions)
 

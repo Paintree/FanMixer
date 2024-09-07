@@ -38,7 +38,15 @@ void fan_task() {
 
     while(1) {
         fanStep();
-        vTaskDelay(10 / portTICK_PERIOD_MS);
+        vTaskDelay(100 / portTICK_PERIOD_MS);
+    }
+}
+
+void timer_task() {
+
+    while(1) {
+        timerStep();
+        vTaskDelay(1000 / portTICK_PERIOD_MS);
     }
 }
 
@@ -48,8 +56,9 @@ int main() {
     gpioInit();
     timerInit();
 
-    xTaskCreate(status_task, "status_task", 64, NULL, 0, NULL);
+    xTaskCreate(status_task, "status_task", 128, NULL, 0, NULL);
     xTaskCreate(fan_task, "fan_task", 128, NULL, 1, NULL);
+    xTaskCreate(timer_task, "timer_task", 128, NULL, 2, NULL);
 
     vTaskStartScheduler();
 

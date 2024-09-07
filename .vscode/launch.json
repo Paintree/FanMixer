@@ -7,7 +7,7 @@
         {
             "name": "Debug",
             "cwd": "${workspaceRoot}",
-            "executable": "${workspaceRoot}/build/FanControllerBoard",
+            "executable": "${workspaceRoot}/build/FanMixer",
             "request": "launch",
             "type": "cortex-debug",
             "interface": "swd",

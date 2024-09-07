@@ -14,28 +14,45 @@
     CYCLE.
 ****************************************************************/
 
-// Default 10S0. Higher means bigger impact.
+// Default 100. Higher means bigger impact.
 #define INPUT_FAN1_WEIGHT 100
 #define INPUT_FAN2_WEIGHT 100
+#define STARTUP_SPEED     30
+#define MAX_SPEED         100
 
 void fanInit() {
-    timerSetPWM(30); // Set Output fan to 30% at startup
+    timerSetPWM(STARTUP_SPEED); // Set Output fan to 30% at startup
 }
 
 uint8_t fanCalculateOutputSpeed(uint8_t fan1Speed, uint8_t fan2Speed) {
     uint8_t fanSpeed = ((fan1Speed * INPUT_FAN1_WEIGHT) 
                      + (fan2Speed * INPUT_FAN2_WEIGHT)) / 100;
 
-    if (fanSpeed >= 100 || fanSpeed < 1) {
-        return 100;
+    if (fanSpeed >= MAX_SPEED || fanSpeed < 1) {
+        return MAX_SPEED;
     }
     return fanSpeed;
 }
 
 void fanStep() {
+    TimerStatus status[INPUT_FANS_COUNT];
     uint8_t inputSingalDutyCycle[INPUT_FANS_COUNT] = {0};
     for (int i = 0; i < INPUT_FANS_COUNT; i++) {
+        status[i] = getPWMTimerStatus(i);
         inputSingalDutyCycle[i] = timerGetPWMReading(i);
+    }
+    if (status[PWM_INPUT_1] == TIMER_NOT_STARTED && status[PWM_INPUT_2] == TIMER_NOT_STARTED) {
+        timerSetPWM(STARTUP_SPEED);
+        return;
+    } else if (status[PWM_INPUT_1] == TIMER_RUNNING && status[PWM_INPUT_2] == TIMER_NOT_STARTED) {
+        timerSetPWM((inputSingalDutyCycle[PWM_INPUT_1] * INPUT_FAN1_WEIGHT)/100);
+        return;
+    } else if (status[PWM_INPUT_1] == TIMER_NOT_STARTED && status[PWM_INPUT_2] == TIMER_RUNNING) {
+        timerSetPWM((inputSingalDutyCycle[PWM_INPUT_2] * INPUT_FAN2_WEIGHT)/100);
+        return;
+    } else if (status[PWM_INPUT_1] == TIMER_NO_UPDATES || status[PWM_INPUT_2] == TIMER_NO_UPDATES) {
+        timerSetPWM(MAX_SPEED);
+        return;
     }
     timerSetPWM(fanCalculateOutputSpeed(inputSingalDutyCycle[PWM_INPUT_1],
                                         inputSingalDutyCycle[PWM_INPUT_2]));

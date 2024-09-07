@@ -1,4 +1,4 @@
-# fan_mixer
+# FanMixer
 Cheap PWM fan mixer based on Blue Pill
 
 Supported MCUs: STM32F103C6T6
