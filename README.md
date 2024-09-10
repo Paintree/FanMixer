@@ -24,6 +24,12 @@ $ make test
 Flash board:
 $ make flash
 
+Builds project in docker container
+$ make build_docker 
+
+Cleans docker container
+$ make clean_docker
+
 Required dependencies:
 arm-none-eabi-gcc
 arm-none-eabi-g++

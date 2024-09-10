@@ -402,4 +402,6 @@ FodyWeavers.xsd
 stm32_workspace/*
 !stm32_workspace/*.ioc
 
+.vscode/tasks.json
+
 build
